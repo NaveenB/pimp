@@ -12,16 +12,24 @@
 	var t =  new Object();
     t.name = "hello 0"
 	t.id = 1
+	t.lat = 47.40458
+	t.lng = 8.402784
     a[0] = t;
   
     var t =  new Object();
     t.name = "hello 1"
 	t.id = 2
+	//t.lat = 47.403176922494225
+//	t.lng = 8.40207516409489
+	t.lat = 0
+	t.lng = 0
     a[1] = t;
 
     var t =  new Object();
     t.name = "hello 2"
 	t.id = 3
+	t.lat = 47.40195827146184
+	t.lng = 8.398957991997614
     a[2] = t;
 
   function call(){
@@ -29,7 +37,7 @@
 	alert("  sdfsd");
 	
     for (var i = 0; i < result.length; i++) {
-		alert("Id: " + result[i].id + "   latlng: " + result[i].latlng);
+		alert("Id: " + result[i].id + "   lat: " + result[i].lat + "  lng: " + result[i].lat);
 	}
   }
 </script>

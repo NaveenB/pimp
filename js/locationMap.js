@@ -51,29 +51,34 @@
   function markOnMap(lat, lng, a){  
 	  var latiN = 0;
 	  var lngiN = 0;
+	  var latlng;
 	  
 	  for (var i = 0; i < a.length; i++) {
-	
-		  var latlng = new google.maps.LatLng(latiN +  parseFloat(lat), lngiN + parseFloat(lng));
+		  if(a[i].lat == 0 || a[i].lng == 0 ){
+
+			  // Generate markers for map randomly.
+			  var randX = Math.random();
+			  var randY = Math.random();
+			  randX *= (randX * 10) % 2 == 0 ? 1 : -1;
+			  randY *= (randY * 10) % 2 == 0 ? 1 : -1;
+
+			  latiN = (randX * 0.005) + parseFloat(lat);
+			  lngiN = (randY * 0.005) + parseFloat(lng);		  
+			  
+			  a[i].lat = latiN  
+			  a[i].lng = lngiN 
+
+			  latlng = new google.maps.LatLng(latiN, lngiN);
+		  } else {
+			latlng = new google.maps.LatLng(a[i].lat, a[i].lng);
+		  }
 		  
 		  var marker = new google.maps.Marker({position: latlng, map: map});
 			google.maps.event.addListener(marker, "click", function() {
 			  if (infowindow) infowindow.close();
 			  infowindow = new google.maps.InfoWindow({content: String(a[i].name)});
 			  infowindow.open(map, marker);
-			});
-		
-		  a[i].latlng = latlng;
-
+			});			
     	  map.addMarker(marker);
-
-		  // Generate markers for map randomly.
-		  var randX = Math.random();
-		  var randY = Math.random();
-		  randX *= (randX * 10) % 2 == 0 ? 1 : -1;
-		  randY *= (randY * 10) % 2 == 0 ? 1 : -1;
-
-		  latiN = (randX * 0.005);
-		  lngiN = (randY * 0.005);		  
 	 }
  }

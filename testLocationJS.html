@@ -1,0 +1,46 @@
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>Google Maps JavaScript API v3 Example: Geocoding Simple</title>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="./js/locationMap.js"></script>
+
+<script>  
+   var a = new Array();
+    
+	var t =  new Object();
+    t.name = "hello 0"
+	t.id = 1
+    a[0] = t;
+  
+    var t =  new Object();
+    t.name = "hello 1"
+	t.id = 2
+    a[1] = t;
+
+    var t =  new Object();
+    t.name = "hello 2"
+	t.id = 3
+    a[2] = t;
+
+  function call(){
+	var result = codeAddress("dietikon, zurich", a);
+	alert("  sdfsd");
+	
+    for (var i = 0; i < result.length; i++) {
+		alert("Id: " + result[i].id + "   latlng: " + result[i].latlng);
+	}
+  }
+</script>
+
+</head>
+<body style="margin:0px; padding:0px;" onload="call()">
+<!--  <div>
+    <input id="address" type="textbox" value="dietikon hofackerstr 21">
+    <input type="button" value="Geocode" onclick="call()">
+  </div>
+-->
+  <div id="map_canvas" style="width:50%; height:50%"></div>
+</body>
+</html>

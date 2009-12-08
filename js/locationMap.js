@@ -2,36 +2,31 @@
   var map;
   var infowindow;
   
-      var a = new Array();
-    var t =  new Object();
-    t.name = "hello 0"
-//    t.lat = geoip_latitude() 
-//    t.lng = geoip_longitude() 
-    a[0] = t;
-  
-    var t =  new Object();
-    t.name = "hello 1"
-//    t.lat = geoip_latitude() 
-//    t.lng = geoip_longitude() 
-    a[1] = t;
+  (function () {
 
-    var t =  new Object();
-    t.name = "hello 2"
-//    t.lat = geoip_latitude() 
-//    t.lng = geoip_longitude() 
-    a[2] = t;
+	  google.maps.Map.prototype.markers = new Array();
+		
+	  google.maps.Map.prototype.addMarker = function(marker) {
+		this.markers[this.markers.length] = marker;
+	  };
+		
+	  google.maps.Map.prototype.getMarkers = function() {
+		return this.markers
+	  };
+    
+  })();
  
   function initialize() {
     var latlng = new google.maps.LatLng(0, 0);
     var myOptions = {
-      zoom: 10,
+      zoom: 14,
       center: latlng,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   }
 
-  function codeAddress(address) {
+  function codeAddress(address, a) {
     initialize();
     geocoder = new google.maps.Geocoder();
     if (geocoder) {
@@ -41,15 +36,16 @@
 
 		  var latlng = String(results[0].geometry.location);
 		  var lat = latlng.substring(1, latlng.indexOf(","));
-		  var lng = latlng.substring(latlng.indexOf(",") + 1, latlng.length - 1);		  
-//		  alert("Sie haben Zutritt : " + results[0].geometry.location + "     " +  lat + "  " + lng);
-		  
+		  var lng = latlng.substring(latlng.indexOf(",") + 1, latlng.length - 1);		  		  
 		  markOnMap(lat, lng, a);
+		  console.log(map.getMarkers());    
     	} else {
           alert("Geocode was not successful for the following reason: " + status);
         }
       });
     }
+	
+	return a;
   }
   
   function markOnMap(lat, lng, a){  
@@ -63,19 +59,21 @@
 		  var marker = new google.maps.Marker({position: latlng, map: map});
 			google.maps.event.addListener(marker, "click", function() {
 			  if (infowindow) infowindow.close();
-			  infowindow = new google.maps.InfoWindow({content: a[i].name});
+			  infowindow = new google.maps.InfoWindow({content: String(a[i].name)});
 			  infowindow.open(map, marker);
 			});
 		
-		  // Place markers on map randomly.
+		  a[i].latlng = latlng;
+
+    	  map.addMarker(marker);
+
+		  // Generate markers for map randomly.
 		  var randX = Math.random();
 		  var randY = Math.random();
 		  randX *= (randX * 10) % 2 == 0 ? 1 : -1;
 		  randY *= (randY * 10) % 2 == 0 ? 1 : -1;
 
-		  latiN = (randX * 0.01);
-		  lngiN = (randY * 0.01);
-		  
-//		  alert(""+ latiN + "  " + lngiN);
+		  latiN = (randX * 0.005);
+		  lngiN = (randY * 0.005);		  
 	 }
-  }
+ }
